@@ -50,8 +50,8 @@ Through this project, you will understand and implement:
 
 You can view this project live on either of the following:
 
-- 🔗 **Netlify:** [[https://your-netlify-url.netlify.app](https://your-netlify-url.netlify.app)](https://smarttodolistbyshivam.netlify.app/)
-- 🔗 **GitHub Pages:** [https://your-github-username.github.io/smart-todo-app](https://your-github-username.github.io/smart-todo-app)
+- 🔗 **Netlify:** [(https://your-netlify-url.netlify.app)](https://smarttodolistbyshivam.netlify.app/)
+- 🔗 **GitHub Pages:** (https://your-github-username.github.io/smart-todo-app)
 
 _(Replace the above links with your actual deployment links)_
 
