@@ -5,32 +5,202 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Smart To-Do App</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <style>
+    :root {
+      --primary: #e74c3c;
+      --primary-dark: #c0392b;
+      --accent: #f9fafb;
+      --text-main: #222;
+      --text-light: #666;
+      --bg-main: #fff;
+      --bg-light: #f9fafb;
+      --border: #ececec;
+      --shadow: 0 2px 16px 0 #e74c3c11;
+    }
+    nav {
+      width: 100vw;
+      background: var(--bg-main);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      border-bottom: 1px solid var(--border);
+    }
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      padding: 1rem 0 1rem 2.5rem;
+      margin: 0;
+      align-items: center;
+    }
+    nav ul li a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: color 0.2s, background 0.2s;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      letter-spacing: 0.01em;
+    }
+    nav ul li a:hover, nav ul li a.active {
+      background: var(--primary);
+      color: #fff;
+    }
+    html {
+      scroll-behavior: smooth;
+      width: 100vw;
+      overflow-x: hidden;
+      background: var(--bg-light);
+    }
+    .section {
+      max-width: 1100px;
+      margin: 0 auto 2.5rem auto;
+      background: var(--bg-main);
+      border-radius: 24px;
+      padding: 3.5rem 2.5rem;
+      box-shadow: var(--shadow);
+      width: 100%;
+      min-width: 0;
+      overflow-x: hidden;
+      border: 1px solid var(--border);
+    }
+    .section h2 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 2.2rem;
+      text-align: left;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .features-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      justify-content: flex-start;
+      margin-top: 2rem;
+      width: 100%;
+    }
+    .feature {
+      background: var(--bg-light);
+      border-radius: 14px;
+      padding: 1.5rem 2rem;
+      min-width: 220px;
+      max-width: 270px;
+      text-align: left;
+      box-shadow: var(--shadow);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .feature svg {
+      flex-shrink: 0;
+      margin-bottom: 0;
+    }
+    .feature svg {
+      margin-bottom: 0.5rem;
+    }
+    .testimonials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      align-items: flex-start;
+      margin-top: 2rem;
+      width: 100%;
+    }
+    .testimonial {
+      background: var(--bg-light);
+      border-radius: 14px;
+      padding: 1.5rem 2rem;
+      max-width: 340px;
+      box-shadow: var(--shadow);
+      font-style: italic;
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      font-size: 1.1rem;
+    }
+    .testimonial .author {
+      display: block;
+      margin-top: 0.7rem;
+      color: var(--primary);
+      font-weight: 600;
+      font-style: normal;
+    }
+    .cta-section {
+      text-align: left;
+      margin-top: 2rem;
+    }
+    .cta-section button, .cta-main {
+      position: relative;
+      background: linear-gradient(90deg, #e74c3c 0%, #ff6f61 100%);
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: 1.2rem;
+      box-shadow: 0 4px 24px #e74c3c22;
+      letter-spacing: 0.01em;
+      overflow: hidden;
+      z-index: 1;
+      transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s;
+      outline: none;
+      isolation: isolate;
+      animation: pulseGlow 2.2s infinite alternate;
+    }
+    .cta-section button:hover, .cta-main:hover {
+      background: linear-gradient(90deg, #ff6f61 0%, #e74c3c 100%);
+      color: #fff;
+      transform: scale(1.06) translateY(-2px);
+      box-shadow: 0 8px 32px #e74c3c33;
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 4px 24px #e74c3c22, 0 0 0 0 #e74c3c33; }
+      100% { box-shadow: 0 8px 32px #e74c3c44, 0 0 16px 4px #ff6f6133; }
+    }
+    .spacer {
+      height: 90px;
+      width: 100vw;
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      padding: 2rem;
+      background: var(--bg-light);
+      color: var(--text-main);
+      min-height: 100vh;
+      width: 100vw;
+      padding: 0;
+      display: block;
+      overflow-x: hidden;
     }
     .todo-container {
-      background: rgba(255,255,255,0.05);
+      background: var(--bg-main);
       backdrop-filter: blur(8px);
-      padding: 2rem;
-      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      border-radius: 24px;
       width: 100%;
       max-width: 500px;
-      box-shadow: 0 0 20px #00f2fe;
+      box-shadow: var(--shadow);
       animation: fadeIn 1.2s ease;
+      border: 1px solid var(--border);
     }
     .todo-container h1 {
-      text-align: center;
+      text-align: left;
       margin-bottom: 1.5rem;
-      font-size: 2rem;
+      font-size: 2.2rem;
+      color: var(--primary);
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
     .todo-input {
       display: flex;
@@ -44,20 +214,27 @@
       font-size: 1rem;
     }
     .todo-input button {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
+      background: var(--primary);
       border: none;
       padding: 0.8rem 1.5rem;
       border-radius: 10px;
-      color: white;
+      color: #fff;
       font-weight: 600;
       cursor: pointer;
+      transition: background 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .todo-input button:hover {
+      background: var(--primary-dark);
+      color: #fff;
     }
     ul {
       list-style: none;
       margin-top: 2rem;
     }
     li {
-      background: #1c1c1c;
+      background: var(--bg-light);
+      color: var(--text-main);
       padding: 1rem;
       margin-bottom: 1rem;
       border-radius: 10px;
@@ -65,18 +242,25 @@
       justify-content: space-between;
       align-items: center;
       animation: slideUp 0.5s ease;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
     }
     li.done {
       text-decoration: line-through;
       opacity: 0.6;
+      color: #bbb;
     }
     .actions button {
       background: transparent;
       border: none;
-      color: #00f2fe;
+      color: var(--primary);
       font-size: 1.2rem;
       cursor: pointer;
       margin-left: 0.5rem;
+      transition: color 0.2s;
+    }
+    .actions button:hover {
+      color: var(--primary-dark);
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
@@ -88,26 +272,113 @@
     }
   </style>
 </head>
-<body>
-  <div class="todo-container">
-    <h1>
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;">
-        <rect x="4" y="4" width="24" height="24" rx="6" fill="#00c6ff"/>
-        <rect x="7" y="9" width="18" height="2.5" rx="1.25" fill="#fff"/>
-        <rect x="7" y="15" width="12" height="2.5" rx="1.25" fill="#fff"/>
-        <rect x="7" y="21" width="8" height="2.5" rx="1.25" fill="#fff"/>
-        <circle cx="24" cy="22" r="3" fill="#fff"/>
-        <path d="M22.5 22.5l1.5 1.5 2.5-2.5" stroke="#00c6ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Smart To-Do <br> <i style="font-size:medium;">By - Shivam Srivastava</i>
-    </h1>
-    
-    <div class="todo-input">
-      <input type="text" id="taskInput" placeholder="Add your task..." onkeydown="if(event.key==='Enter'){addTask()}" />
-      <button onclick="addTask()">Add</button>
+
+  <body>
+  <nav>
+    <div style="display:flex;align-items:center;gap:1rem;padding-left:1.5rem;">
+      <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="38" height="38" rx="10" fill="#e74c3c"/><rect x="9" y="11" width="20" height="3.5" rx="1.75" fill="#fff"/><rect x="9" y="18" width="20" height="3.5" rx="1.75" fill="#fff"/><rect x="9" y="25" width="14" height="3.5" rx="1.75" fill="#fff"/></svg>
+      <span style="font-size:1.6rem;font-weight:700;color:#e74c3c;letter-spacing:-0.03em;">Smart To-Do</span>
     </div>
-    <ul id="taskList"></ul>
-  </div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#get-started" class="cta-nav">Get Started</a></li>
+    </ul>
+  </nav>
+  <div class="spacer"></div>
+  <section id="home" class="section" style="margin-top: 0;display:flex;align-items:center;justify-content:space-between;gap:2.5rem;">
+    <div style="flex:1;min-width:320px;" data-aos="fade-right">
+      <h1 style="font-size:2.7rem;margin-bottom:1.2rem;line-height:1.1;">Clarity, finally.</h1>
+      <p style="font-size:1.25rem;color:var(--text-light);margin-bottom:2.2rem;">Join millions who simplify work and life with the world's #1 to-do list app.</p>
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:2.2rem;">
+        <button class="cta-main" onclick="document.getElementById('taskInput').focus()">
+          <svg style="vertical-align:middle;margin-right:0.7em;display:inline-block;" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="22" height="22" rx="6" fill="#fff" fill-opacity="0.18"/>
+            <path d="M7 11h8M11 7l4 4-4 4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Start for free
+        </button>
+        <span style="color:var(--text-light);font-size:1.1rem;">★ 374K+ reviews</span>
+      </div>
+    </div>
+    <div style="flex:1;min-width:320px;display:flex;justify-content:center;align-items:center;" data-aos="fade-left">
+      <div class="todo-container" style="margin:0;box-shadow:var(--shadow);">
+        <h1 style="font-size:1.5rem;margin-bottom:1rem;color:var(--primary);text-align:left;">Today</h1>
+        <div class="todo-input" style="margin-bottom:1.2rem;">
+          <input type="text" id="taskInput" placeholder="Add your task..." onkeydown="if(event.key==='Enter'){addTask()}" />
+          <button onclick="addTask()">Add</button>
+        </div>
+        <ul id="taskList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="section" data-aos="fade-up">
+    <h2>Features</h2>
+    <div class="features-list">
+      <div class="feature"><svg width="32" height="32" fill="none" viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="24" rx="6" fill="#e74c3c"/><path d="M10 16l4 4 8-8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div>Easy Task Management</div></div>
+      <div class="feature"><svg width="32" height="32" fill="none" viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="24" rx="6" fill="#e74c3c"/><path d="M16 10v8M16 18l-3-3m3 3l3-3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div>Mark as Done</div></div>
+      <div class="feature"><svg width="32" height="32" fill="none" viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="24" rx="6" fill="#e74c3c"/><path d="M10 22h12M10 16h12M10 10h12" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg><div>Modern & Responsive UI</div></div>
+      <div class="feature"><svg width="32" height="32" fill="none" viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="24" rx="6" fill="#e74c3c"/><path d="M16 10v8M16 18l-3-3m3 3l3-3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div>Fast & Lightweight</div></div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="section" data-aos="fade-up">
+    <h2>Testimonials</h2>
+    <div class="testimonials">
+      <div class="testimonial">"This app keeps me on track every day! Simple and beautiful."<span class="author">- Priya S.</span></div>
+      <div class="testimonial">"I love the clean design and how easy it is to use."<span class="author">- Alex R.</span></div>
+      <div class="testimonial">"Best to-do app I've tried. Highly recommended!"<span class="author">- Jordan M.</span></div>
+    </div>
+  </section>
+
+  <section id="get-started" class="section cta-section" data-aos="fade-up">
+    <h2>Ready to get productive?</h2>
+    <p style="font-size:1.2rem;color:var(--text-light);margin-bottom:2rem;">Start using Smart To-Do now and take control of your tasks!</p>
+    <button onclick="document.getElementById('taskInput').focus()">Try It Now</button>
+  </section>
+
+  <footer style="background:var(--bg-main);border-top:1px solid var(--border);padding:2.5rem 0 1.5rem 0;margin-top:2rem;text-align:center;color:var(--text-light);font-size:1.05rem;">
+    <div style="max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:2rem;">
+      <div style="flex:1;min-width:220px;text-align:left;">
+        <div style="display:flex;align-items:center;gap:0.7rem;margin-bottom:0.7rem;">
+          <svg width="28" height="28" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="28" height="28" rx="7" fill="#e74c3c"/><rect x="6" y="8" width="16" height="2.5" rx="1.25" fill="#fff"/><rect x="6" y="13" width="16" height="2.5" rx="1.25" fill="#fff"/><rect x="6" y="18" width="10" height="2.5" rx="1.25" fill="#fff"/></svg>
+          <span style="font-size:1.2rem;font-weight:700;color:#e74c3c;">Smart To-Do</span>
+        </div>
+        <div>Join millions of people who organize their work and life with Smart To-Do.</div>
+        <div style="margin-top:0.7rem;font-size:1.08rem;color:#e74c3c;font-weight:500;">
+          Made with <span style="font-size:1.15em;vertical-align:middle;">❤️</span> by Shivam Srivastava
+        </div>
+      </div>
+      <div style="flex:2;min-width:220px;text-align:left;display:flex;gap:2.5rem;justify-content:flex-end;">
+        <div>
+          <div style="font-weight:600;color:var(--text-main);margin-bottom:0.7rem;">Features</div>
+          <div style="color:var(--text-light);margin-bottom:0.3rem;">How It Works</div>
+          <div style="color:var(--text-light);margin-bottom:0.3rem;">For Teams</div>
+          <div style="color:var(--text-light);margin-bottom:0.3rem;">Pricing</div>
+          <div style="color:var(--text-light);margin-bottom:0.3rem;">Templates</div>
+        </div>
+        <div>
+          <div style="font-weight:600;color:var(--text-main);margin-bottom:0.7rem;">Resources</div>
+          <div style="color:var(--text-light);margin-bottom:0.3rem;">Download Apps</div>
+          <div style="color:var(--text-light);margin-bottom:0.3rem;">Help Center</div>
+          <div style="color:var(--text-light);margin-bottom:0.3rem;">Productivity Methods</div>
+          <div style="color:var(--text-light);margin-bottom:0.3rem;">Integrations</div>
+        </div>
+        <div>
+          <div style="font-weight:600;color:var(--text-main);margin-bottom:0.7rem;">Company</div>
+          <div style="color:var(--text-light);margin-bottom:0.3rem;">About Us</div>
+          <div style="color:var(--text-light);margin-bottom:0.3rem;">Careers</div>
+          <div style="color:var(--text-light);margin-bottom:0.3rem;">Inspiration Hub</div>
+          <div style="color:var(--text-light);margin-bottom:0.3rem;">Press</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2rem;color:#bbb;font-size:0.98rem;">© 2025 Smart To-Do. All rights reserved.</div>
+  </footer>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>AOS.init({duration:900,once:true});</script>
 
   <script>
     function addTask() {
